@@ -68,9 +68,9 @@ const SignUp = () => {
           </button>
         </form>
             <div className='flex gap-2 mt-3'>
-              <p>Have an Account ?</p>
+              <p>Already have an account ?</p>
           <Link to={'/signin'}>
-          <span className='text-blue-400'>sign in</span>
+          <span className='text-blue-400'>Sign in</span>
           </Link>      
             </div>
             <p className='text-red-600 mt-4'>{errorMessage && 'Something went wrong !!!'}</p>
