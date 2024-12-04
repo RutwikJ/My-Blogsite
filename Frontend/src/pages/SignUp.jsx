@@ -38,7 +38,7 @@ const SignUp = () => {
       }
       setLoading(false)
       if(res.ok){
-        navigate('/signin')
+        navigate('/sign-in')
       }
 
     }catch(err){
@@ -51,9 +51,9 @@ const SignUp = () => {
       <div className=' p-3 max-w-lg mx-auto'>
         <h1 className='text-3xl font-semibold text-center my-7'>Sign Up</h1>
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-          <input type='text' id='username' placeholder='username' className='bg-orange-100 rounded-lg p-3' onChange={handleChange}/>
-          <input type='email' id='email' placeholder='email' className='bg-orange-100 rounded-lg p-3' onChange={handleChange}/>
-          <input type='password' id='password' placeholder='password' className='bg-orange-100 rounded-lg p-3' onChange={handleChange}/>
+          <input type='text' id='username' placeholder='username' className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
+          <input type='email' id='email' placeholder='email' className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
+          <input type='password' id='password' placeholder='password' className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
           <button
             className='text-white font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg p-3 hover:opacity-95 disabled:80'
             disabled={loading}
@@ -69,7 +69,7 @@ const SignUp = () => {
         </form>
             <div className='flex gap-2 mt-3'>
               <p>Already have an account ?</p>
-          <Link to={'/signin'}>
+          <Link to={'/sign-in'}>
           <span className='text-blue-400'>Sign in</span>
           </Link>      
             </div>
