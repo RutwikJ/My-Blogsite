@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
+import {useDispatch,useSelector} from 'react-redux';
+import { signInStart,signInSuccess,signInFailure } from '../features/user/userSlice.js'
 
 const SignIn = () => {
   const [formData, setFormData] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const {loading,error:errorMessage}=useSelector((state)=>state.user)
   const navigate=useNavigate()
+  const dispatch=useDispatch()
   const handleChange=(e)=>{
     const {id,value}=e.target
     setFormData((prevFormData)=>({...prevFormData,[id]:value.trim()}))
@@ -13,9 +15,12 @@ const SignIn = () => {
   }
   const handleSubmit=async(e)=>{
     e.preventDefault()
+    if (!formData.email || !formData.password) {
+      return dispatch(signInFailure('Please fill all the fields'));
+    }
     try{
-      setLoading(true)
-      setErrorMessage(null)
+     
+      dispatch(signInStart())
       const res=await fetch('/api/auth/signin',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -23,17 +28,17 @@ const SignIn = () => {
       })
       const data= await res.json()
       if(data.success==false){
-        setErrorMessage(data.message)
+      dispatch(signInFailure(data.message))
       }
 
       if(res.ok){
+        dispatch(signInSuccess(data))
         navigate('/')
       }
 
       
     }catch(err){
-      setLoading(false)
-      setErrorMessage(err.message)
+     dispatch(signInFailure(err.message))
     }
   }
   return (
@@ -57,7 +62,7 @@ const SignIn = () => {
             <p className='text-blue-500 hover:cursor-pointer hover:opacity-90'>Already have an account?</p>
             </Link>
           </div>
-          <p className='text-red-600 mt-4'>{errorMessage && 'Something went wrong !!!'}</p>
+          <p className='text-red-600 mt-4'>{errorMessage }</p>
 
         </form>
       </div>
