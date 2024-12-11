@@ -85,7 +85,7 @@ export const google=async(req,res,next)=>{
   if(user){
     const token= jwt.sign({id:user._id,isAdmin:user.isAdmin},
       process.env.JWT_SECRET,
-      {expiresIn:'1d'}
+    
     )
 
       const {password,...rest}=user._doc;
@@ -95,7 +95,7 @@ export const google=async(req,res,next)=>{
         httpOnly:true,
         secure:true,
         sameSite:'None',
-        maxAge:1*24*60*60*1000
+        
       })
       .json(rest)
     }else{
@@ -119,7 +119,7 @@ export const google=async(req,res,next)=>{
       const token=jwt.sign(
         {id:newUser._id,isAdmin:newUser.isAdmin},
         process.env.JWT_SECRET,
-        {expiresIn:'1d'}
+        
       );
       const {password,...rest}=newUser._doc;
       res
@@ -128,12 +128,23 @@ export const google=async(req,res,next)=>{
         httpOnly:true,
         secure:true,
         sameSite:'None',
-        maxAge:1*24*60*60*1000
+      
       })
       .json(rest)
 
 
     }
+  }catch(err){
+    next(err)
+  }
+}
+
+export const signOut=(req,res,next)=>{
+  try{
+    res
+    .status(200)
+    .clearCookie('access_token')
+    .json({message:'User has signed out successfully'})
   }catch(err){
     next(err)
   }
