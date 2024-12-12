@@ -26,7 +26,7 @@ const Dashboard = () => {
       <DashSidebar/>
       </div>
       
-      <div>
+      <div className='flex-grow'>
         {/* right-side profile */}
         {tab==='profile' && <DashProfile/>}
       </div>
