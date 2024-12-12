@@ -5,11 +5,8 @@ import { Navigate, Outlet } from 'react-router-dom'
 const DashboardLayout = () => {
 
     const {currentUser}= useSelector((state)=>state.user)
-  return (
-   <div>
-    {currentUser ?<Outlet/>:<Navigate to='/sign-in'/>}
-   </div> 
-  )
+  return currentUser?<Outlet/>:<Navigate to='/sign-in'/>
+   
 }
 
 export default DashboardLayout
