@@ -53,7 +53,7 @@ export const signIn = async (req, res, next) => {
     }
 
     const token = jwt.sign(
-      { id: validUser._id, isAdmin: validPassword.isAdmin },
+      { id: validUser._id, isAdmin: validUser.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );

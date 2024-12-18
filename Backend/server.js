@@ -3,10 +3,14 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import userRoutes from './Route/user.route.js'
 import authRoutes from './Route/auth.route.js'
+import cookieParser from "cookie-parser";
 const app = express();
 const PORT = 3000;
 dotenv.config();
 app.use(express.json())
+app.use(cookieParser())
+
+
 
 mongoose
   .connect(
@@ -17,6 +21,7 @@ mongoose
   }).catch((err)=>{
     console.log(err)
   });
+
   app.use('/api/user',userRoutes)
 
   app.use('/api/auth',authRoutes)
@@ -31,6 +36,10 @@ mongoose
       message
     })
  })
+ app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`, req.body);
+  next();
+});
  
 
 app.listen(PORT, () => {
