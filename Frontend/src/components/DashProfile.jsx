@@ -4,8 +4,9 @@ import {getDownloadURL, getStorage, uploadBytesResumable,ref} from 'firebase/sto
 import { app } from "../../Firebase";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateStart,updateSuccess,updateFailure } from "../features/user/userSlice";
+import { updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess,deleteUserFailure } from "../features/user/userSlice";
 import { useDispatch } from "react-redux";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
@@ -18,6 +19,7 @@ const DashProfile = () => {
   const [updateUserSuccess,setUpdateUserSuccess]=useState(null)
   const [updateUserError, setUpdateUserError] = useState(null);
   const dispatch=useDispatch()
+  const [showModal,setShowModal]=useState(false)
   
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -118,6 +120,32 @@ const DashProfile = () => {
     
 
   }
+  const handleDeleteUser=async(e)=>{
+    setShowModal(false)
+    try{
+      dispatch(deleteUserStart())
+      const res= await fetch(`/api/user/delete/${currentUser._id}`,{
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: currentUser._id })
+      });
+      
+
+    
+      const data =await res.json()
+      if(!res.ok){
+        dispatch(deleteUserStart(data.message))
+      }else{
+        dispatch(deleteUserSuccess(data))
+      }
+
+
+    }catch(err){
+      dispatch(deleteUserFailure(err.message))
+    }
+  }
   return (
     <div className="max-w-lg p-4 mx-auto">
       <h1 className="text-3xl my-7 text-center">Profile</h1>
@@ -191,14 +219,14 @@ const DashProfile = () => {
         />
         <button 
           className={`text-white p-3 bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg cursor-pointer  ${!(imageFileUploadProgress === "100"  || Object.keys(formData).length > 0) ? "opacity-50 cursor-not-allowed" : ""}`}
-          disabled={!(imageFileUploadProgress === "100") || (Object.keys(formData).length>0)}
+          disabled={!(imageFileUploadProgress === "100" || Object.keys(formData).length>0)}
         >
           Update
         </button>
       </form>
       <div className="text-red-400 flex justify-between mt-5">
-        <span className=" cursor-pointer">Delete Account </span>
-        <span className=" cursor-pointer">Sign Out</span>
+        <span className=" cursor-pointer" onClick={()=>setShowModal(true)}>Delete Account </span>
+        <span className=" cursor-pointer" >Sign Out</span>
       </div>
 
       {updateUserSuccess && (
@@ -207,6 +235,21 @@ const DashProfile = () => {
         {updateUserError && (
         <p className='bg-red-400 text-white text-center mt-4 p-2 rounded-lg'>{updateUserError}</p>
       )}
+      
+        {showModal &&(
+          <div className="fixed inset-0 flex items-center justify-center z-50 ">
+            <div className="fixed inset-0 bg-black opacity-50 " onClick={()=>setShowModal(false)}/>
+             <div className="bg-white rounded-lg shadow-lg p-6 relative z-10 w-full max-w-lg">
+              <HiOutlineExclamationCircle className="w-14 h-14 text-red-400 mb-4 mx-auto"/>
+              <h3 className="my-3 text-lg text-gray-500 text-center"> Are you sure you want to delete your account ?</h3>
+              <div className="flex gap-4 justify-center" >
+              <button className="bg-red-500 text-white p-3 rounded-lg" onClick={handleDeleteUser}> Yes, I'm sure</button>
+              <button className="bg-green-500 text-white p-3 rounded-lg" onClick={()=>setShowModal(false)}> No, cancel</button>
+              </div>
+              </div> 
+          </div>
+
+        )}
     </div>
   );
 };
