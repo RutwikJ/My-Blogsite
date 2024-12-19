@@ -190,8 +190,8 @@ const DashProfile = () => {
           onChange={handleChange}
         />
         <button 
-          className={`text-white p-3 bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg cursor-pointer  ${!(imageFileUploadProgress === "100") ? "opacity-50 cursor-not-allowed" : ""}`}
-          disabled={!(imageFileUploadProgress === "100")}
+          className={`text-white p-3 bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg cursor-pointer  ${!(imageFileUploadProgress === "100"  || Object.keys(formData).length > 0) ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={!(imageFileUploadProgress === "100") || (Object.keys(formData).length>0)}
         >
           Update
         </button>
