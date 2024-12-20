@@ -7,7 +7,7 @@ const Header = () => {
   const{currentUser}=useSelector((state)=>state.user)
   const dispatch= useDispatch()
 
-  const handleSignOut = async (req,res,next) => {
+  const handleUserSignOut = async (req,res,next) => {
     try {
       const res = await fetch('/api/auth/signout', {
         method: 'POST',
@@ -53,7 +53,7 @@ const Header = () => {
                   Profile
                 </li>
               </Link>
-              <button onClick={handleSignOut} className="text-red-500">Sign out</button>
+              <button onClick={handleUserSignOut} className="text-red-500">Sign out</button>
             </>
           ) : (
             <>

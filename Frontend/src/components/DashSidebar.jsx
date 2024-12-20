@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation} from 'react-router-dom'
-
+import { signOutSuccess } from '../features/user/userSlice.js'
+import { useDispatch } from 'react-redux'
 const DashSidebar = () => {
     const location=useLocation()
     const [tab,setTab]=useState('')
+    const dispatch=useDispatch()
     
     useEffect(()=>{
     
@@ -14,6 +16,26 @@ const DashSidebar = () => {
      } 
 
     },[location.search])
+
+    const handleUserSignOut=async()=>{
+      try{
+        const res= await fetch('/api/auth/signout',{
+          method:'POST',
+    
+        });
+        const data= await res.json()
+        if(!res.ok){
+          console.log(data.message);
+          }else{
+            dispatch(signOutSuccess());
+    
+          }
+      }catch(err){
+        console.log(err.message);
+        
+      }
+    }
+    
 
 
   return (
@@ -27,7 +49,11 @@ const DashSidebar = () => {
         </div>
         </Link>
         
-        <div className='items-center p-2 rounded-lg hover:opacity-80'>
+        <div 
+        
+        className='cursor-pointer items-center p-2 rounded-lg hover:opacity-80'
+        onClick={handleUserSignOut}
+        >
             SIGN OUT
         </div>
         
