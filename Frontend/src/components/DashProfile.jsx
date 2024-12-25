@@ -7,6 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess,deleteUserFailure,signOutSuccess } from "../features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
@@ -74,7 +75,7 @@ const DashProfile = () => {
     setFormData({...formData,[e.target.id]:e.target.value})
 
   }
-  console.log(formData);
+  // console.log(formData);
   
   const handleSubmit=async(e)=>{
     e.preventDefault();
@@ -239,11 +240,23 @@ const handleUserSignOut=async()=>{
           onChange={handleChange}
         />
         <button 
-          className={`text-white p-3 bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg cursor-pointer  ${!(imageFileUploadProgress === "100"  || Object.keys(formData).length > 0) ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`font-extrabold text-black p-3 bg-gradient-to-r  from-amber-500 via-amber-400 to-amber-500 rounded-lg cursor-pointer  ${!(imageFileUploadProgress === "100"  || Object.keys(formData).length > 0) ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={!(imageFileUploadProgress === "100" || Object.keys(formData).length>0)}
         >
           Update
         </button>
+        {currentUser.isAdmin && (
+          
+          <Link to='/create-post'>
+
+            <button
+                type='button'
+                className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg p-3 text-white w-full'>
+                  Create A Post
+            </button>
+          </Link>
+          
+        )}
       </form>
       <div className="text-red-400 flex justify-between mt-5">
         <span className=" cursor-pointer" onClick={()=>setShowModal(true)}>Delete Account </span>
