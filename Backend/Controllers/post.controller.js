@@ -2,8 +2,8 @@ import Post from "../models/post.model.js"
 import { errorHandler } from "../Utils/errorHandler.js"
 
 export const createPost=async(req,res,next)=>{
-    console.log(req.user) 
-    console.log(req.body);
+    // console.log(req.user) 
+    // console.log(req.body);
     
     //send from cookie 
     if(!req.user.isAdmin){
