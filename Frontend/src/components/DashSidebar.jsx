@@ -43,7 +43,7 @@ const DashSidebar = () => {
     <div className='w-full md:w-56 bg-gray-500 text-white md:h-screen'>
       <div className='flex flex-col gap-2 p-4'>
         <Link to={'/dashboard?tab=profile'}>
-        <div className={`flex items-center p-2 rounded-md hover:opacity-80 ${tab=='profile' ? 'bg-gray-400':''}`}>
+        <div className={`flex items-center   font-semibold p-2 rounded-md hover:opacity-80 ${tab=='profile' ? 'bg-gray-400':''}`}>
             {/* profile */}
             Profile <span className='ml-auto bg-gray-600 rounded-lg p-1'>{currentUser.isAdmin ? 'Admin':'User'}</span>
 
@@ -54,12 +54,17 @@ const DashSidebar = () => {
 
         {currentUser.isAdmin && (
             <Link to={'/dashboard?tab=posts'}>
-            <div className='bg-gray-400 rounded-md hover:opacity-80 p-3'>
+            <div className='bg-gray-400 rounded-md font-semibold hover:opacity-80 p-2 active:bg-green-300 '>
               Posts
             </div>
             </Link>
         )}
-        
+        {/* //users */}
+        {currentUser.isAdmin && (
+          <Link to={'/dashboard?tab=users'}>
+            <div className='bg-gray-400  font-semibold rounded-md hover:bg-opacity-80 p-2 active:bg-green-300 '>Users</div>
+          </Link>
+        )}
 
         <div
         className='cursor-pointer items-center p-2 rounded-lg hover:opacity-80'
