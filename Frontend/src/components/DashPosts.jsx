@@ -82,7 +82,7 @@ const handleDeletePost=async(postId)=>{
             <tbody>
             {userPosts.map((post)=>(
               <tr key={post._id}>
-                 <td className='px-6 py-4'>{new Date(post.updatedAt).toLocaleDateString()}</td> 
+                 <td className='px-6 py-4'>{new Date(post.updatedAt).toLocaleDateString('en-GB')}</td> 
                  <td className='px-6 py-4 '><Link to={`/post/${post.slug}`}>
                  <img src={post.image} alt={post.title} className='w-20 h-10 object-cover '/>
                  </Link>

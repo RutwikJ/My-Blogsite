@@ -79,7 +79,7 @@ const handleDeleteUser=async(userId)=>{
             <tbody>
             {users.map((user)=>(
               <tr key={user._id}>
-                 <td className='px-6 py-4'>{new Date(user.createdAt).toLocaleDateString()}</td> 
+                 <td className='px-6 py-4'>{new Date(user.createdAt).toLocaleDateString('en-GB')}</td> 
                  <td className='px-6 py-4 '>
                  <img src={user.profilePic} alt={user.username} className='w-11 h-11 object-cover rounded-full bg-slate-600 '/>
                  </td> 
