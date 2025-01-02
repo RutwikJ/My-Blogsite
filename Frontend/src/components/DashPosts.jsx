@@ -92,7 +92,7 @@ const handleDeletePost=async(postId)=>{
                   </td> 
                  <td className='px-6 py-4'>{post.category}</td> 
                  <td className='px-6 py-4 hover:underline text-red-500'><span onClick={()=>handleDeletePost(post._id)}>Delete</span></td> 
-                 <td className='px-6 py-4 hover:underline text-green-400'><Link>Edit</Link></td> 
+                 <td className='px-6 py-4 hover:underline text-green-400'><Link to={`/update-post/${post._id}`}>Edit</Link></td> 
             </tr>))}
 
             </tbody>
