@@ -56,7 +56,7 @@ export const updateUser = async (req, res, next) => {
 
 //delete user
 export const deleteUser=async(req,res,next)=>{
-  if(req.body.id !==req.params.userId){
+  if(!req.user.isAdmin && req.body.id !==req.params.userId){
       return next(errorHandler(403,'Unauthorised to delete this user'))
   }
 

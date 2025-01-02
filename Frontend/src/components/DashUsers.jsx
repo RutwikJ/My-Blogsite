@@ -7,7 +7,7 @@ const DashUsers = () => {
 const {currentUser} =useSelector((state)=>state.user)
 const [users,setUsers]=useState([])
 const [showMore, setShowMore] = useState(true);
-console.log(users);
+// console.log(users);
 
 useEffect(() => {
 const fetchUsers = async () => {
@@ -44,6 +44,23 @@ const handleShowMore = async () => {
     console.log(error.message);
   }
 };
+const handleDeleteUser=async(userId)=>{
+  try{
+    const res=await fetch(`/api/user/delete/${userId}`,{
+      method:'DELETE',
+     })
+     const data =await res.json()
+     if(res.ok){
+      setUsers((prev)=>prev.filter((user)=>user._id !==userId))
+     }else{
+      console.log(data.message);
+      
+     }
+  }catch(err){
+    console.log(err.message);
+    
+  }
+}
   return (
     <div className='overflow-x-scroll  p-3'>
       {currentUser.isAdmin && users.length>0 ? 
@@ -71,7 +88,7 @@ const handleShowMore = async () => {
                   </td> 
                  <td className='px-6 py-4'>{user.email}</td> 
                  <td className='px-6 py-4'>{user.isAdmin ? (<FaCheck className='text-green-500'/>):(<FaTimes className='text-red-500'/>)}</td> 
-                 <td className='px-6 py-4 hover:underline text-red-500'><span>Delete</span></td> 
+                 <td className='px-6 py-4 hover:underline text-red-500'><span onClick={()=>handleDeleteUser(user._id)}>Delete</span></td> 
                  
             </tr>))}
 
