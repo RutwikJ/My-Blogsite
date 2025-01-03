@@ -94,6 +94,7 @@ const handleDeleteUser=async(userId)=>{
 
             </tbody>
         </table>
+        {showMore ? (<div className='flex mt-5'><button onClick={handleShowMore} className='text-blue-600 mx-auto'>Show more</button></div>):<></>}
       
       
       </>)
