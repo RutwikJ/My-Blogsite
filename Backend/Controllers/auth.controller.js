@@ -4,7 +4,8 @@ import { errorHandler } from "../Utils/errorHandler.js";
 import jwt from "jsonwebtoken";
 export const signUp = async (req, res, next) => {
   const { username, email, password } = req.body;
-
+  // console.log(req.body);
+  
   if (
     !username ||
     !email ||
@@ -15,7 +16,9 @@ export const signUp = async (req, res, next) => {
   ) {
     next(errorHandler(500, "All fields are required"));
   }
-
+  if (typeof password === 'undefined') {
+    return next(errorHandler(500, "Password is required"));
+  }
   const hashedPassword = bcryptjs.hashSync(password, 10); // hashSync has inbuilt await
 
   const newUser = new User({

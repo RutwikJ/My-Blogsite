@@ -61,7 +61,7 @@ const SignIn = () => {
           <GoogleAuth/>
           <div className='flex gap-2 mt-3 justify-center'>
             <Link to={'/sign-up'}>
-            <p className='text-blue-500 hover:cursor-pointer hover:opacity-90'>Already have an account ?</p>
+            <p className='text-blue-500 hover:cursor-pointer hover:opacity-90'>Don't have an account yet ?</p>
             </Link>
           </div>
           <p className='text-red-600 mt-4'>{errorMessage }</p>
