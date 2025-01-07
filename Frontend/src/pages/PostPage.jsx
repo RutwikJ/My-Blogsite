@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import CallToAction from '../components/CallToAction'
 const PostPage = () => {
     const {postSlug}=useParams()
     const [loading,setLoading]=useState(true)
@@ -43,7 +44,7 @@ const PostPage = () => {
         <img 
             src={post && post.image} 
             alt={post && post.title}
-            className='mt-10 p-3 object-cover  max-h-[600px] w-full rounded-3xl'/>
+            className='mt-5 p-3 object-cover  max-h-[600px] max-w-5xl rounded-3xl mx-auto'/>
         <div className='flex justify-between p-3 mx-auto w-full  max-w-2xl text-xs  border-b border-gray-400 mb-5'>
             <span>
                 {post && new Date(post.createdAt).toLocaleDateString('en-GB')}
@@ -52,8 +53,13 @@ const PostPage = () => {
                 {post && (post.content.length/1000).toFixed(0)} min read
             </span>
         </div>
-        <div className='p-3 max-w-2xl mx-auto w-full '
-            dangerouslySetInnerHTML={{__html:post && post.content}}>
+        <div className='p-3 max-w-2xl mx-auto w-full'
+            dangerouslySetInnerHTML={{__html:post && post.content}}
+            >
+
+        </div>
+        <div className='max-w-4xl mx-auto w-full mb-5'>
+            <CallToAction/>
 
         </div>
     </main>
