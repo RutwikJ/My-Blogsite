@@ -5,6 +5,7 @@ import userRoutes from './Route/user.route.js'
 import authRoutes from './Route/auth.route.js'
 import cookieParser from "cookie-parser";
 import postRoutes from './Route/post.route.js'
+import commentRoutes from './Route/comment.route.js'
 const app = express();
 const PORT = 3000;
 dotenv.config();
@@ -28,6 +29,7 @@ mongoose
   app.use('/api/auth',authRoutes)
 
   app.use('/api/post',postRoutes)
+  app.use('/api/comment',commentRoutes)
   
  app.use((err,req,res,next)=>{
     const statusCode=err.statusCode || 500;

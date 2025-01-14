@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CallToAction from '../components/CallToAction'
+import CommentSection from '../components/CommentSection'
 const PostPage = () => {
     const {postSlug}=useParams()
     const [loading,setLoading]=useState(true)
@@ -62,6 +63,8 @@ const PostPage = () => {
             <CallToAction/>
 
         </div>
+        <CommentSection postId={post._id}/>
+        
     </main>
   )
 }
