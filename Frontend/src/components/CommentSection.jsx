@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -7,7 +7,11 @@ const CommentSection = ({postId}) => {
     const {currentUser}=useSelector((state)=>state.user)
     const [comment,setComment]=useState('')
     const [commentError,setCommentError]=useState(null)
-    const handleSubmit=async(e)=>{
+   const [comments,setComments]=useState([])
+    
+   console.log(comments);
+   
+   const handleSubmit=async(e)=>{
         e.preventDefault()
         if(comment.length>200){
             return
@@ -37,6 +41,22 @@ const CommentSection = ({postId}) => {
         }
     
     }
+    useEffect(()=>{
+        const getComments= async()=>{
+            try {
+                const res= await fetch(`/api/comment/getPostComment/${postId}`)
+                if(res.ok){
+                    const data=await res.json()
+                        setComments(data)
+                }
+                
+            } catch (err) {
+                console.log(err.message);
+                
+            }
+        }
+        getComments()
+    },[postId])
     return (
     <div className='mx-auto max-w-2xl w-full p-3'>
 

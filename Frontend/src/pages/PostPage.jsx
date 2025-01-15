@@ -63,7 +63,7 @@ const PostPage = () => {
             <CallToAction/>
 
         </div>
-        <CommentSection postId={post._id}/>
+        {post._id && <CommentSection postId={post._id} />}
         
     </main>
   )
