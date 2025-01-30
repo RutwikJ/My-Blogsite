@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import Comment from './Comment'
 
 
 const CommentSection = ({postId}) => {
@@ -9,7 +10,7 @@ const CommentSection = ({postId}) => {
     const [commentError,setCommentError]=useState(null)
    const [comments,setComments]=useState([])
     
-   console.log(comments);
+//    console.log(comments);
    
    const handleSubmit=async(e)=>{
         e.preventDefault()
@@ -34,6 +35,7 @@ const CommentSection = ({postId}) => {
             if(res.ok){
                 setComment('')
                 setCommentError(null)
+                setComments([data,...comments])
             }
          
         } catch (error) {
@@ -108,6 +110,24 @@ const CommentSection = ({postId}) => {
            
             
         )}
+        {comments.length ===0 ?
+        (<p className='my-5'>Be the first write your thoughts on this post</p>)
+        :
+        (<>
+        <div className='gap-1 text-sm my-5 flex items-center bg-slate-300 p-1 rounded-md'>
+            <p>Comments</p>
+            <div className='border border-gray-400 px-2 py-1 rounded-sm bg-white'>
+                <p>{comments.length}</p>
+                </div>
+        </div>
+        
+        {comments.map((comment)=>(
+            <Comment 
+                    key={comment._id}
+                    comment={comment}
+                     />
+        ))}</>
+    )}
     </div>
   )
 }
