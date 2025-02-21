@@ -6,6 +6,9 @@ import authRoutes from './Route/auth.route.js'
 import cookieParser from "cookie-parser";
 import postRoutes from './Route/post.route.js'
 import commentRoutes from './Route/comment.route.js'
+import path from 'path';
+
+const __dirname=path.resolve()
 const app = express();
 const PORT = 3000;
 dotenv.config();
@@ -31,6 +34,11 @@ mongoose
   app.use('/api/post',postRoutes)
   app.use('/api/comment',commentRoutes)
   
+  app.use(express.static(path.join(__dirname,'/Frontend/dist')))
+  
+  app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'Frontend','dist','index.html'))
+  })
  app.use((err,req,res,next)=>{
     const statusCode=err.statusCode || 500;
     const message= err.message || 'Internal Server Error';

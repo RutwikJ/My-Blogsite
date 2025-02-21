@@ -19,7 +19,7 @@ export const signUp = async (req, res, next) => {
   
   const { username, email, password } = req.body;
   // console.log(req.body);
-  await promise.All(signUpValidation.map(val=>val.run(req)));
+  await Promise.all(signUpValidation.map(val=>val.run(req)));
   const errors=validationResult(req)
   if(!errors.isEmpty()){
    
@@ -57,7 +57,7 @@ const signInValidation=[
 export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
  
-  await promise.All(signInValidation.map(val=>val.run(req)))
+  await Promise.all(signInValidation.map(val=>val.run(req)))
   const errors=validationResult(req)
   if(!errors.isEmpty()){
     const errMessage=errors.array().map(error=>error.msg).join(', ')
