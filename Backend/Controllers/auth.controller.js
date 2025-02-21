@@ -2,22 +2,29 @@ import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import { errorHandler } from "../Utils/errorHandler.js";
 import jwt from "jsonwebtoken";
+import {body,validationResult} from 'express-validator';
+
+
+const signUpValidation=[
+  body('username')
+  .notEmpty().withMessage('Username required').trim().escape(),
+  body('email')
+  .notEmpty().withMessage('Email is required')
+  .isEmail().withMessage('Email is invalid ').normalizeEmail(),
+  body('password')
+  .notEmpty().withMessage('Password is required')
+  .isLength({min:8}).withMessage('Password must be atleast be 8 characters long')
+]
 export const signUp = async (req, res, next) => {
+  
   const { username, email, password } = req.body;
   // console.log(req.body);
-  
-  if (
-    !username ||
-    !email ||
-    !password ||
-    username === "" ||
-    email === "" ||
-    password === ""
-  ) {
-    next(errorHandler(500, "All fields are required"));
-  }
-  if (typeof password === 'undefined') {
-    return next(errorHandler(500, "Password is required"));
+  await promise.All(signUpValidation.map(val=>val.run(req)));
+  const errors=validationResult(req)
+  if(!errors.isEmpty()){
+   
+   const errMessage=errors.array().map(error=>error.msg).join(', ')
+    return next(errorHandler(400,errMessage))
   }
   const hashedPassword = bcryptjs.hashSync(password, 10); // hashSync has inbuilt await
 
@@ -36,11 +43,28 @@ export const signUp = async (req, res, next) => {
 };
 
 //signIn api
+
+const signInValidation=[
+  body('email')
+  .notEmpty().withMessage('Email is required')
+  .isEmail().withMessage('Email is invalid')
+  .normalizeEmail(),
+  body('password')
+  .notEmpty().withMessage('Password is required')
+  .isLength({min:8}).withMessage('password must have atleast 8 characters')
+  
+]
 export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password || email == "" || password == "") {
-    return next(errorHandler(500, "All fields are required"));
+ 
+  await promise.All(signInValidation.map(val=>val.run(req)))
+  const errors=validationResult(req)
+  if(!errors.isEmpty()){
+    const errMessage=errors.array().map(error=>error.msg).join(', ')
+    return next(errorHandler(400,errMessage))
+
   }
+
 
   try {
     const validUser = await User.findOne({ email });

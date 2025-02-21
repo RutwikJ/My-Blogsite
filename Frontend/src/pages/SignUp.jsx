@@ -52,9 +52,34 @@ const SignUp = () => {
       <div className=' p-3 max-w-lg mx-auto'>
         <h1 className='text-3xl font-semibold text-center my-7'>Sign Up</h1>
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-          <input type='text' id='username' placeholder='username' className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
-          <input type='email' id='email' placeholder='email' className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
-          <input type='password' id='password' placeholder='password' className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
+          <input
+           type='text'
+            id='username'
+             placeholder='username'
+              className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' 
+              onChange={handleChange}
+              pattern='^[a-zA-Z0-9_-]{3,16}$'
+              title='Username must have 3-16 characters can include letters,numbers ,hyphens and underscores'
+              required/>
+          <input type='email' 
+          id='email'
+           placeholder='email'
+            className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none' 
+            onChange={handleChange}
+            pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            required
+            title='Please enter a valid email address.'/>
+          <input 
+          type='password'
+           id='password'
+            placeholder='password'
+             className='bg-orange-100 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:outline-none'
+              onChange={handleChange}
+              pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\-_])[A-Za-z\d@\-_]{8,}$'
+              required
+              title='Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.'
+
+              />
           <button
             className='text-white font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg p-3 hover:opacity-95 disabled:80'
             disabled={loading}

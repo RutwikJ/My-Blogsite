@@ -47,8 +47,18 @@ const SignIn = () => {
       <div className='p-3 max-w-lg mx-auto '>
         <h1 className='text-3xl font-semibold text-center my-7'>Sign in</h1>
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-          <input type='email' id='email' placeholder='email' className='p-3 rounded-lg bg-orange-100 focus:ring-2 focus:ring-purple-500 focus:outline-none'  onChange={handleChange}/>
-          <input type='password' id='password' placeholder='password' className='p-3 rounded-lg bg-orange-100 focus:ring-2 focus:ring-purple-500 focus:outline-none' onChange={handleChange}/>
+          <input type='email'
+           id='email'
+            placeholder='email'
+             className='p-3 rounded-lg bg-orange-100 focus:ring-2 focus:ring-purple-500 focus:outline-none'  
+             onChange={handleChange}
+             
+             />
+          <input type='password'
+           id='password'
+            placeholder='password'
+             className='p-3 rounded-lg bg-orange-100 focus:ring-2 focus:ring-purple-500 focus:outline-none'
+              onChange={handleChange}/>
 
           <button
             className='text-white font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg p-3 hover:opacity-95 disabled:80'
