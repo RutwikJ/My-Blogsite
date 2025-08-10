@@ -7,11 +7,13 @@ import cookieParser from "cookie-parser";
 import postRoutes from './Route/post.route.js'
 import commentRoutes from './Route/comment.route.js'
 import path from 'path';
+import job from "./config/cron.js";
 
 const __dirname=path.resolve()
 const app = express();
 const PORT = 3000;
 dotenv.config();
+job.start()
 app.use(express.json())
 app.use(cookieParser())
 
